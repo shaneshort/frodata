@@ -68,6 +68,11 @@ module FrOData
       self
     end
 
+    def filter_class(term)
+      criteria_set[:Class] << term
+      self
+    end
+
     # Adds a filter criteria to the query with 'and' logical operator.
     # @param criteria
     #def and(criteria)
@@ -190,6 +195,7 @@ module FrOData
         orderby:      [],
         skip:         0,
         top:          0,
+        Class:        [],
         inline_count: false
       }
     end
@@ -198,6 +204,7 @@ module FrOData
       [
         filter_criteria,
         search_criteria,
+        class_criteria,
         list_criteria(:orderby),
         list_criteria(:expand),
         list_criteria(:select),
@@ -207,6 +214,12 @@ module FrOData
       ].compact.reduce(&:merge)
     end
 
+    def class_criteria
+      return nil if criteria_set[:Class].empty?
+      filters = criteria_set[:Class].collect(&:to_s)
+      "Class=#{filters.join(' AND ')}"
+    end
+    
     def filter_criteria
       return nil if criteria_set[:filter].empty?
       filters = criteria_set[:filter].collect(&:to_s)
