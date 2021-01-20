@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.9.5
+
+* Add support for `Class` criteria
+
+## 0.9.4
+
+* Not documented upstream
+
 ## 0.9.3
 
 * Fix broken stack traces in response errors
